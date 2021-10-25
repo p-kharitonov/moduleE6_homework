@@ -25,8 +25,8 @@ from chat.api import RoomRetrieveUpdateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/', include('djoser.urls')),
-    path('auth/', include('djoser.urls.authtoken')),
+    path('api/auth/', include('djoser.urls')),
+    path('api/auth/', include('djoser.urls.authtoken')),
     path("api/profile/", UserProfileDetailView.as_view(), name="api_profile"),
     path("api/room/", RoomListView.as_view(), name="api_room"),
     path("api/room/<int:pk>", RoomRetrieveUpdateView.as_view(), name="api_room"),

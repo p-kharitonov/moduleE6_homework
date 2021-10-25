@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'date_joined')
         # fields = '__all__'
-        read_only_fields = ('username', 'email')
+        read_only_fields = ('id', 'username', 'email')
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -18,7 +18,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ('user', 'room', 'avatar',)
+        fields = ('user', 'avatar',)
         # fields = '__all__'
 
     def update(self, instance, validated_data, partial=True):
@@ -34,7 +34,15 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
 class RoomSerializer(serializers.ModelSerializer):
+    own = UserProfileSerializer(read_only=True)
+
     class Meta:
         model = Room
-        fields = ['id', 'title', 'description', 'created_at']
+        fields = ['id', 'title', 'description', 'own', 'created_at']
         read_only_fields = ('created_at',)
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        user_profile = UserProfile.objects.get(user=user)
+        return Room.objects.create(own=user_profile, **validated_data)
+
