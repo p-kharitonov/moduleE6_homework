@@ -1,5 +1,5 @@
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveUpdateAPIView,\
-    RetrieveAPIView, CreateAPIView
+    RetrieveAPIView, CreateAPIView, DestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from .models import UserProfile, Room
 from .permissions import IsOwnerProfileOrReadOnly
@@ -38,6 +38,12 @@ class RoomCreateView(CreateAPIView):
 
 
 class RoomRetrieveUpdateView(RetrieveUpdateAPIView):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
+    permission_classes = [IsOwnerRoom, IsAuthenticated]
+
+
+class RoomDestroyView(DestroyAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
     permission_classes = [IsOwnerRoom, IsAuthenticated]
