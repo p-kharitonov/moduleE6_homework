@@ -37,13 +37,7 @@ class RoomCreateView(CreateAPIView):
     permission_classes = [IsAuthenticated]
 
 
-class RoomRetrieveUpdateView(RetrieveUpdateAPIView):
-    queryset = Room.objects.all()
-    serializer_class = RoomSerializer
-    permission_classes = [IsOwnerRoom, IsAuthenticated]
-
-
-class RoomDestroyView(DestroyAPIView):
+class RoomView(RetrieveUpdateDestroyAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
     permission_classes = [IsOwnerRoom, IsAuthenticated]

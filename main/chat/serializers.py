@@ -38,8 +38,8 @@ class RoomSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Room
-        fields = ['id', 'title', 'description', 'own', 'created_at']
-        read_only_fields = ('created_at',)
+        fields = ['id', 'title', 'description', 'own', 'users', 'created_at']
+        read_only_fields = ('own', 'users', 'created_at',)
 
     def create(self, validated_data):
         user = self.context['request'].user

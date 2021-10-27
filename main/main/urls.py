@@ -20,8 +20,7 @@ from rest_framework.routers import DefaultRouter
 from chat.api import UserProfileDetailView
 from chat.api import RoomListView
 from chat.api import RoomCreateView
-from chat.api import RoomRetrieveUpdateView
-from chat.api import RoomDestroyView
+from chat.api import RoomView
 # from chat.api import UserProfileListCreateView
 
 urlpatterns = [
@@ -30,8 +29,7 @@ urlpatterns = [
     path('api/auth/', include('djoser.urls.authtoken')),
     path("api/profile/", UserProfileDetailView.as_view(), name="api_profile"),
     path("api/room/", RoomListView.as_view(), name="api_room"),
-    path("api/room/<int:pk>", RoomRetrieveUpdateView.as_view(), name="api_room"),
-    path("api/room/<int:pk>/delete", RoomDestroyView.as_view(), name="api_room"),
+    path("api/room/<int:pk>", RoomView.as_view(), name="api_room"),
     path("api/room/create", RoomCreateView.as_view(), name="api_room"),
 
     path('chat/', include('chat.urls')),
