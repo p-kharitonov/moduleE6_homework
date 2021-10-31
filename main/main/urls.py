@@ -17,20 +17,25 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import include
 from rest_framework.routers import DefaultRouter
-from chat.api import UserProfileDetailView
+from chat.api import AccountDetailView
 from chat.api import RoomListView
 from chat.api import RoomCreateView
-from chat.api import RoomView
-# from chat.api import UserProfileListCreateView
+from chat.api import RoomChangeView
+from chat.api import RoomJoinView
+from chat.api import MessageListView
+# from chat.api import AccountListCreateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/auth/', include('djoser.urls')),
-    path('api/auth/', include('djoser.urls.authtoken')),
-    path("api/profile/", UserProfileDetailView.as_view(), name="api_profile"),
+    path('api/auth/', include('djoser.urls.jwt')),
+    path("api/account/", AccountDetailView.as_view(), name="api_account"),
     path("api/room/", RoomListView.as_view(), name="api_room"),
-    path("api/room/<int:pk>", RoomView.as_view(), name="api_room"),
+    path("api/room/<int:pk>/", RoomChangeView.as_view(), name="api_room"),
+    path("api/room/<int:pk>/join", RoomJoinView.as_view(), name="api_room"),
+    path("api/room/<int:pk>/message", MessageListView.as_view(), name="api_room"),
     path("api/room/create", RoomCreateView.as_view(), name="api_room"),
+
 
     path('chat/', include('chat.urls')),
 
